@@ -21,8 +21,7 @@ def test_predict(client):
     assert body['class_name'] == 'HerbaceousVegetation'
 
 def test_predict_reject_non_image_content_type(client):
-    with open("notes.txt") as f:
-        content = f.read()
+    content = b"This is a content"
 
     r = client.post(
         '/predict',
@@ -38,9 +37,7 @@ def test_predict_reject_non_image_content_type(client):
 
 
 def test_predict_reject_non_image_actual_content(client):
-    with open("notes.txt") as f:
-        content = f.read()
-
+    content = b"This is a content"
     r = client.post(
         '/predict',
         files={'file':("notes.txt", content, "image/jpeg")}

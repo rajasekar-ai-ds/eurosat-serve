@@ -1,0 +1,9 @@
+.git/
+.venv/
+**/__pycache__/
+.idea/
+tests
+empty.jpg
+notes.txt
+samples
+.pytest_cache/

@@ -3,7 +3,7 @@ from PIL import Image
 import io
 from pathlib import Path
 from starlette.testclient import TestClient
-from app import app
+from app import app, WEIGHTS_PATH
 
 def test_health(client):
     r = client.get('/health')
@@ -87,12 +87,8 @@ def test_preprocess_grayscale_200(client):
     assert body['class_name'] == 'HerbaceousVegetation'
 
 
-
-path = Path(__file__).resolve()
-path = path.parent.parent
-WEIGHTS_PATH = path / "models" / "best.pt"
-
-FILE_PATH = path / "samples" / "Highway_1899.jpg"
+BASE_DIR = Path(__file__).resolve().parent.parent
+FILE_PATH = BASE_DIR / "samples" / "Highway_1899.jpg"
 
 
 @pytest.mark.skipif(not WEIGHTS_PATH.exists(), reason='model weights not available')

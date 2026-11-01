@@ -7,16 +7,18 @@ from predict import load_model, preprocess, predict
 import io
 from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent
+
+MODELS_DIR = BASE_DIR / "models"
+WEIGHTS_PATH = MODELS_DIR / "best.pt"
+CLASSES_PATH = MODELS_DIR / "classes.json"
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
     #startup
-    path = Path(__file__).resolve()
-    path = path.parent / "models"
-    app.state.model, app.state.class_names = load_model(path / "best.pt", path / "classes.json")
+    app.state.model, app.state.class_names = load_model(WEIGHTS_PATH, CLASSES_PATH)
     yield
     #shutdown
-    #These are not mandatory as the app.state will be erased when the app shuts down.
     app.state.model = None
     app.state.class_names = None
 

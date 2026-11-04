@@ -1,4 +1,7 @@
 [core]
-    remote = localstore
+    remote = azremote
 ['remote "localstore"']
     url = /home/raj/dvc-store
+['remote "azremote"']
+    url = azure://dvc/eurosat-serve
+    account_name = eurosatdvc6182

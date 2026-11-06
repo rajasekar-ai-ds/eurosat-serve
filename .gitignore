@@ -3,10 +3,10 @@
 __pycache__/
 *.pyc
 *.pt
-notes.txt
-empty.jpg
+scratch/notes.txt
+scratch/empty.jpg
 
 
 /models
-hmac_check.py
-check.py
+scratch/hmac_check.py
+scratch/check.py

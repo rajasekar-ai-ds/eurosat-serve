@@ -3,9 +3,9 @@
 **/__pycache__/
 .idea/
 tests
-empty.jpg
-notes.txt
+scratch/empty.jpg
+scratch/notes.txt
 samples
 .pytest_cache/
-hmac_check.py
-check.py
+scratch/hmac_check.py
+scratch/check.py

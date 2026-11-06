@@ -1,0 +1,45 @@
+name: CI
+
+
+on:
+  push:
+    branches: [ "main" ]
+
+  pull_request:
+    branches: [ "main" ]
+permissions:
+  contents: read
+
+jobs:
+
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements-dev.txt
+            requirements.txt
+
+      - name: Install Dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Configure DVC credential
+        env:
+          AZURE_SAS_TOKEN: ${{ secrets.AZURE_SAS_TOKEN }}
+        run: dvc remote modify --local azremote sas_token "$AZURE_SAS_TOKEN"
+
+      - name: Download the weights from Azure
+        run: dvc pull
+
+      - name: Run Tests
+        run: pytest -v
+
+
+

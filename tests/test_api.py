@@ -4,7 +4,7 @@ import io
 from pathlib import Path
 from starlette.testclient import TestClient
 from app import app, WEIGHTS_PATH
-from check import in_ci
+from scratch.check import in_ci
 
 def test_health(client):
     r = client.get('/health')
@@ -94,6 +94,7 @@ FILE_PATH = BASE_DIR / "samples" / "Highway_1899.jpg"
 
 @pytest.mark.skipif(not WEIGHTS_PATH.exists() and not in_ci() , reason='weights not pulled - run dvc pull to enable')
 def test_real_model_prediction():
+
     if not WEIGHTS_PATH.exists():
         pytest.fail("weights missing in CI , does the dvc pull step actually run?")
     with TestClient(app) as c:

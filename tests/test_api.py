@@ -4,7 +4,10 @@ import io
 from pathlib import Path
 from starlette.testclient import TestClient
 from app import app, WEIGHTS_PATH
-from scratch.check import in_ci
+import os
+
+def in_ci():
+    return os.getenv("CI") == 'true'
 
 def test_health(client):
     r = client.get('/health')

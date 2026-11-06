@@ -24,22 +24,3 @@ def client(monkeypatch):
     with TestClient(app_module.app) as c:
         yield c
 
-
-
-
-#
-# @pytest.fixture(scope="session")
-# def client(target_module, name, new_value):
-#     model, class_names = fake_load_model(None, "../models/classes.json")
-#     with pytest.MonkeyPatch.context() as mp:
-#         mp.setattr(app_module.app, "model", model)
-#         yield mp
-#
-
-
-# model = FakeModel()
-# x = torch.randn(2, 2342)
-# y = model(x)
-# print(y)
-# print(y.shape)
-

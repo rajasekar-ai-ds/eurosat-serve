@@ -18,6 +18,15 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
+      - name: Check SAS Token
+        env:
+          AZURE_SAS_TOKEN: ${{ secrets.AZURE_SAS_TOKEN_TYPO }}
+        run: | 
+          if [ -z "$AZURE_SAS_TOKEN" ]; then
+            echo "::error::AZURE_SAS_TOKEN is empty"
+            exit 1
+          fi
+
       - name: Checkout Code
         uses: actions/checkout@v4
 

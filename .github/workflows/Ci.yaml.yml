@@ -52,7 +52,6 @@ jobs:
           .venv/bin/python -m pip install -r requirements-dev.txt
 
       - name: Set GITHUB_PATH
-        if: steps.venv-cache.outputs.cache-hit == 'true'
         run: echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
 
       - name: Check step

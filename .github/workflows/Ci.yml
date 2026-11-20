@@ -44,7 +44,6 @@ jobs:
           key: v1-venv-${{ runner.os }}-py${{ steps.py.outputs.python-version}}-${{ hashFiles('requirements.txt', 'requirements-dev.txt') }}
 
 
-
       - name: Install Dependencies
         if: steps.venv-cache.outputs.cache-hit != 'true'
         run: |
@@ -64,7 +63,19 @@ jobs:
           AZURE_SAS_TOKEN: ${{ secrets.AZURE_SAS_TOKEN }}
         run: dvc remote modify --local azremote sas_token "$AZURE_SAS_TOKEN"
 
+      - name: Cache Model Weight
+        uses: actions/cache@v4
+        id: cache_model
+        with:
+          path: .dvc/cache
+          key: v1-dvc-${{ runner.os }}-${{hashFiles('models.dvc')}}
+
+      - name: Checkout If present in the cache
+        if: steps.cache_model.outputs.cache-hit == 'true'
+        run: dvc checkout
+
       - name: Download the weights from Azure
+        if: steps.cache_model.outputs.cache-hit != 'true'
         run: dvc pull
 
       - name: Run Tests
